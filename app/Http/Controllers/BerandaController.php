@@ -16,7 +16,7 @@ final class BerandaController extends Controller
 {
     public function __invoke(Request $request, AksesUnit $akses, KotakMasukService $kotak): Response
     {
-        $user = $request->user();
+        $user = $this->pengguna($request);
         $tahun = (int) (DB::table('rba')->where('status', 'DEFINITIF')->max('tahun') ?? now()->year);
         $lintasUnit = $user->hasAnyRole(['perencana', 'administrator', 'pimpinan_blud', 'pejabat_keuangan', 'verifikator', 'auditor']);
         $unit = $akses->unitPengguna($user->id);

@@ -26,7 +26,7 @@ final class RevisiController extends Controller
 
     public function edit(Request $request, PaguJenis $pagu): Response
     {
-        $paket = $this->revisi->bukaDraf($pagu, $request->user());
+        $paket = $this->revisi->bukaDraf($pagu, $this->pengguna($request));
         $rba = Rba::definitif($pagu->tahun);
 
         return Inertia::render('Revisi/Edit', [
@@ -63,7 +63,7 @@ final class RevisiController extends Controller
             'baris.*.sub_kegiatan_id' => ['nullable', 'integer'],
         ]);
 
-        return response()->json($this->revisi->simpanBaris($paket, $request->user(), $data['baris']));
+        return response()->json($this->revisi->simpanBaris($paket, $this->pengguna($request), $data['baris']));
     }
 
     public function ringkasan(RevisiPaket $paket): JsonResponse
@@ -73,14 +73,14 @@ final class RevisiController extends Controller
 
     public function simpan(Request $request, RevisiPaket $paket): RedirectResponse|JsonResponse
     {
-        $paket = $this->revisi->simpan($paket, $request->user(), $request->string('alasan')->toString() ?: null);
+        $paket = $this->revisi->simpan($paket, $this->pengguna($request), $request->string('alasan')->toString() ?: null);
 
         return response()->json(['status' => $paket->status, 'nomor' => $paket->nomor]);
     }
 
     public function kirimPergeseran(Request $request, RevisiPaket $paket): JsonResponse
     {
-        $paket = $this->revisi->kirimPergeseran($paket, $request->user(), $request->string('alasan')->toString() ?: null);
+        $paket = $this->revisi->kirimPergeseran($paket, $this->pengguna($request), $request->string('alasan')->toString() ?: null);
         $permintaan = $paket->permintaan()->first(['uuid', 'nomor', 'arah', 'nilai', 'batas_pasangan']);
 
         return response()->json(['status' => $paket->status, 'nomor' => $paket->nomor, 'permintaan' => $permintaan]);
@@ -92,21 +92,21 @@ final class RevisiController extends Controller
             'rincian_id' => ['nullable', 'integer'], 'item_id' => ['required', 'integer'],
             'file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
         ]);
-        $this->revisi->lampirkanBukti($paket, $request->user(), $d['rincian_id'] ?? null, (int) $d['item_id'], $request->file('file'));
+        $this->revisi->lampirkanBukti($paket, $this->pengguna($request), $d['rincian_id'] ?? null, (int) $d['item_id'], $request->file('file'));
 
         return response()->json(['ok' => true], 201);
     }
 
     public function batalkan(Request $request, RevisiPaket $paket): JsonResponse
     {
-        $this->revisi->batalkanDraf($paket, $request->user());
+        $this->revisi->batalkanDraf($paket, $this->pengguna($request));
 
         return response()->json(['status' => 'DIBATALKAN']);
     }
 
     public function setujui(Request $request, RevisiPaket $paket): JsonResponse
     {
-        $paket = $this->revisi->setujui($paket, $request->user(), $request->string('catatan')->toString() ?: null);
+        $paket = $this->revisi->setujui($paket, $this->pengguna($request), $request->string('catatan')->toString() ?: null);
 
         return response()->json(['status' => $paket->status]);
     }
@@ -114,7 +114,7 @@ final class RevisiController extends Controller
     public function tolak(Request $request, RevisiPaket $paket): JsonResponse
     {
         $request->validate(['catatan' => ['required', 'string', 'min:10']]);
-        $paket = $this->revisi->tolak($paket, $request->user(), $request->string('catatan')->toString());
+        $paket = $this->revisi->tolak($paket, $this->pengguna($request), $request->string('catatan')->toString());
 
         return response()->json(['status' => $paket->status]);
     }

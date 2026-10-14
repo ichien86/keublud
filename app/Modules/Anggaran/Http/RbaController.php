@@ -28,12 +28,12 @@ final class RbaController extends Controller
 
         return Inertia::render('Rba/Index', [
             'rba' => $rba,
-            'boleh_ajukan' => $request->user()->can('rba.konsolidasi'),
+            'boleh_ajukan' => $this->pengguna($request)->can('rba.konsolidasi'),
         ]);
     }
 
     public function ajukan(Request $request, Rba $rba, PersetujuanRbaService $svc): JsonResponse
     {
-        return response()->json(['status' => $svc->ajukan($rba, $request->user())->status]);
+        return response()->json(['status' => $svc->ajukan($rba, $this->pengguna($request))->status]);
     }
 }

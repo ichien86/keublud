@@ -37,14 +37,14 @@ final class ImporRbaController extends Controller
     {
         $request->validate(['file' => ['required', 'file', 'mimes:xlsx,xls', 'max:61440']]);
 
-        return response()->json($this->impor->unggah($request->file('file'), $request->user()));
+        return response()->json($this->impor->unggah($request->file('file'), $this->pengguna($request)));
     }
 
     public function pratinjau(Request $request): JsonResponse
     {
         $d = $request->validate(['batch_uuid' => ['required', 'uuid'], 'sheet' => ['required', 'string'], 'kelompok' => ['required', 'integer', 'min:0', 'max:5']]);
 
-        return response()->json($this->impor->pratinjau($d['batch_uuid'], $d['sheet'], (int) $d['kelompok'], $request->user()));
+        return response()->json($this->impor->pratinjau($d['batch_uuid'], $d['sheet'], (int) $d['kelompok'], $this->pengguna($request)));
     }
 
     public function mulai(Request $request): JsonResponse
@@ -54,7 +54,7 @@ final class ImporRbaController extends Controller
             'tahun' => ['required', 'integer', 'between:2020,2100'], 'sumber_dana_id' => ['required', 'integer', 'exists:sumber_dana,id'],
         ]);
 
-        return response()->json(['uuid' => $this->impor->mulai($d['batch_uuid'], $d['sheet'], (int) $d['kelompok'], (int) $d['tahun'], (int) $d['sumber_dana_id'], $request->user())], 201);
+        return response()->json(['uuid' => $this->impor->mulai($d['batch_uuid'], $d['sheet'], (int) $d['kelompok'], (int) $d['tahun'], (int) $d['sumber_dana_id'], $this->pengguna($request))], 201);
     }
 
     public function tampil(Request $request, string $uuid): Response
@@ -95,20 +95,20 @@ final class ImporRbaController extends Controller
                   ORDER BY 1", [$i->id])),
             'unit' => DB::table('unit_kerja')->where('aktif', true)->orderBy('nama')->get(['id', 'kode', 'nama']),
             'rekening_hilang' => DB::table('staging_rba')->where('impor_rba_id', $i->id)->whereNull('rekening_blud_id')->distinct()->count('kode_blud'),
-            'boleh_kodefikasi' => $request->user()->can('kodefikasi.kelola'),
-            'boleh_usul' => $request->user()->can('standar.usul'),
+            'boleh_kodefikasi' => $this->pengguna($request)->can('kodefikasi.kelola'),
+            'boleh_usul' => $this->pengguna($request)->can('standar.usul'),
         ]);
     }
 
     public function kodefikasi(Request $request, string $uuid): JsonResponse
     {
-        return response()->json($this->impor->lengkapiKodefikasi((int) $this->cari($uuid)->id, $request->user()));
+        return response()->json($this->impor->lengkapiKodefikasi((int) $this->cari($uuid)->id, $this->pengguna($request)));
     }
 
     public function label(Request $request, string $uuid): JsonResponse
     {
         $d = $request->validate(['label' => ['required', 'string', 'max:200'], 'unit_id' => ['nullable', 'integer', 'exists:unit_kerja,id'], 'unit_baru' => ['nullable', 'string', 'max:200']]);
-        $this->impor->petakanLabel((int) $this->cari($uuid)->id, $d['label'], $d['unit_id'] ?? null, $d['unit_baru'] ?? null, $request->user());
+        $this->impor->petakanLabel((int) $this->cari($uuid)->id, $d['label'], $d['unit_id'] ?? null, $d['unit_baru'] ?? null, $this->pengguna($request));
 
         return response()->json(['ok' => true]);
     }
@@ -119,38 +119,38 @@ final class ImporRbaController extends Controller
             'item' => ['present', 'array'], 'item.*.item_id' => ['required', 'integer'], 'item.*.volume' => ['required', 'regex:/^\d+(\.\d{1,4})?$/'],
             'item.*.harga' => ['nullable', 'regex:/^\d+(\.\d{1,2})?$/'], 'item.*.unit_id' => ['nullable', 'integer'], 'unit_id' => ['nullable', 'integer'],
         ]);
-        $this->impor->simpanItem($baris, $d['item'], $d['unit_id'] ?? null, $request->user());
+        $this->impor->simpanItem($baris, $d['item'], $d['unit_id'] ?? null, $this->pengguna($request));
 
         return response()->json(['ok' => true]);
     }
 
     public function abaikan(Request $request, int $baris): JsonResponse
     {
-        $this->impor->abaikan($baris, $request->input('alasan'), $request->user());
+        $this->impor->abaikan($baris, $request->input('alasan'), $this->pengguna($request));
 
         return response()->json(['ok' => true]);
     }
 
     public function ajukanUsulan(Request $request, string $uuid): JsonResponse
     {
-        return response()->json($this->impor->ajukanUsulan((int) $this->cari($uuid)->id, $request->user()));
+        return response()->json($this->impor->ajukanUsulan((int) $this->cari($uuid)->id, $this->pengguna($request)));
     }
 
     public function unitMassal(Request $request, string $uuid): JsonResponse
     {
         $d = $request->validate(['unit_id' => ['required', 'integer', 'exists:unit_kerja,id']]);
 
-        return response()->json(['jumlah' => $this->impor->unitMassal((int) $this->cari($uuid)->id, (int) $d['unit_id'], $request->user())]);
+        return response()->json(['jumlah' => $this->impor->unitMassal((int) $this->cari($uuid)->id, (int) $d['unit_id'], $this->pengguna($request))]);
     }
 
     public function bentuk(Request $request, string $uuid): JsonResponse
     {
-        return response()->json(['rba_id' => $this->impor->bentukRba((int) $this->cari($uuid)->id, $request->user())]);
+        return response()->json(['rba_id' => $this->impor->bentukRba((int) $this->cari($uuid)->id, $this->pengguna($request))]);
     }
 
     public function batalkan(Request $request, string $uuid): JsonResponse
     {
-        $this->impor->batalkan((int) $this->cari($uuid)->id, $request->user());
+        $this->impor->batalkan((int) $this->cari($uuid)->id, $this->pengguna($request));
 
         return response()->json(['ok' => true]);
     }
@@ -165,7 +165,7 @@ final class ImporRbaController extends Controller
 
     private function pastikan(Request $request): void
     {
-        abort_unless($request->user()->can('rba.impor'), 403, 'Anda tidak berwenang mengimpor RBA.');
+        abort_unless($this->pengguna($request)->can('rba.impor'), 403, 'Anda tidak berwenang mengimpor RBA.');
     }
 
     /** @return list<string> */

@@ -38,8 +38,8 @@ final class PergeseranController extends Controller
         return Inertia::render('Pergeseran/Index', [
             'terbuka' => $this->terbuka($request)->getData(true)['data'],
             'pasangan' => $pasangan->map(fn ($p) => [...(array) $p, 'anggota' => $anggota->get($p->id, collect())->values()]),
-            'boleh_sahkan' => $request->user()->can('pergeseran.sahkan'),
-            'boleh_bentuk' => $request->user()->can('pergeseran.ajukan') || $request->user()->can('pergeseran.sahkan'),
+            'boleh_sahkan' => $this->pengguna($request)->can('pergeseran.sahkan'),
+            'boleh_bentuk' => $this->pengguna($request)->can('pergeseran.ajukan') || $this->pengguna($request)->can('pergeseran.sahkan'),
         ]);
     }
 
@@ -62,7 +62,7 @@ final class PergeseranController extends Controller
 
     public function batalkanPermintaan(Request $request, PermintaanPergeseran $permintaan): JsonResponse
     {
-        $this->permintaan->batalkan($permintaan, $request->user());
+        $this->permintaan->batalkan($permintaan, $this->pengguna($request));
 
         return response()->json(['status' => 'DIBATALKAN']);
     }
@@ -70,7 +70,7 @@ final class PergeseranController extends Controller
     public function bentuk(Request $request): JsonResponse
     {
         $data = $request->validate(['permintaan_ids' => ['required', 'array', 'min:2'], 'permintaan_ids.*' => ['integer']]);
-        $p = $this->pasangan->bentuk(array_map('intval', $data['permintaan_ids']), $request->user());
+        $p = $this->pasangan->bentuk(array_map('intval', $data['permintaan_ids']), $this->pengguna($request));
 
         return response()->json(['uuid' => $p->uuid, 'nomor' => $p->nomor, 'status' => $p->status], 201);
     }
@@ -81,14 +81,14 @@ final class PergeseranController extends Controller
             'permintaan_id' => ['required', 'integer'], 'setuju' => ['required', 'boolean'],
             'catatan' => ['nullable', 'string', 'required_if:setuju,false', 'min:10'],
         ]);
-        $p = $this->pasangan->putuskanUnit($pasangan, (int) $data['permintaan_id'], $request->user(), (bool) $data['setuju'], $data['catatan'] ?? null);
+        $p = $this->pasangan->putuskanUnit($pasangan, (int) $data['permintaan_id'], $this->pengguna($request), (bool) $data['setuju'], $data['catatan'] ?? null);
 
         return response()->json(['status' => $p->status]);
     }
 
     public function sahkan(Request $request, PasanganPergeseran $pasangan): JsonResponse
     {
-        $p = $this->pasangan->sahkan($pasangan, $request->user(), $request->string('catatan')->toString() ?: null);
+        $p = $this->pasangan->sahkan($pasangan, $this->pengguna($request), $request->string('catatan')->toString() ?: null);
 
         return response()->json(['status' => $p->status]);
     }
@@ -96,7 +96,7 @@ final class PergeseranController extends Controller
     public function tolak(Request $request, PasanganPergeseran $pasangan): JsonResponse
     {
         $request->validate(['catatan' => ['required', 'string', 'min:10']]);
-        $p = $this->pasangan->tolak($pasangan, $request->user(), $request->string('catatan')->toString());
+        $p = $this->pasangan->tolak($pasangan, $this->pengguna($request), $request->string('catatan')->toString());
 
         return response()->json(['status' => $p->status]);
     }

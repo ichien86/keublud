@@ -1,5 +1,7 @@
 includes:
     - vendor/larastan/larastan/extension.neon
+    # Temuan lama yang dicatat saat PHPStan pertama kali diaktifkan (Okt 2026). Kurangi bertahap; temuan BARU tetap menggagalkan CI.
+    - phpstan-baseline.neon
 
 parameters:
     paths:

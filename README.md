@@ -79,6 +79,8 @@ Data demo adalah contoh — **bukan** kodefikasi, standar harga, atau unit riil 
 
 Uji fitur **wajib** memakai PostgreSQL nyata (bukan SQLite) karena aturan pagu dijaga constraint dan trigger.
 
+Analisis statis: `vendor/bin/phpstan analyse` (level 8, Larastan). Temuan lama dicatat di `phpstan-baseline.neon` saat PHPStan pertama kali diaktifkan; temuan baru tetap menggagalkan CI, dan baseline dikurangi bertahap.
+
 ## Peta kode
 
 ```

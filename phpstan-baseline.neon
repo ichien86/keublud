@@ -1,0 +1,589 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Using nullsafe property access "\?\-\>id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Middleware/SetKonteksAudit.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:adalahTandaTangan\(\) has parameter \$r with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:cariJudul\(\) has parameter \$baris with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:judulKelompok\(\) has parameter \$judul with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:kepala\(\) has parameter \$baris with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:kolomPemda\(\) has parameter \$baris with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:nilai\(\) has parameter \$k with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:nilai\(\) has parameter \$r with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:pecah\(\) has parameter \$simpul with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:petunjuk\(\) has parameter \$anak with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:petunjuk\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:segmen\(\) has parameter \$r with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:selesaikanKomponen\(\) has parameter \$k with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:sisipkan\(\) has parameter \$induk with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:sisipkan\(\) has parameter \$simpul with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:teksAnak\(\) has parameter \$r with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:teksDalam\(\) has parameter \$r with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:teksPertama\(\) has parameter \$r with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Property App\\Modules\\ImporRba\\Domain\\BarisRba\:\:\$petunjuk \(list\<string\>\) does not accept array\.$#'
+			identifier: assign.propertyType
+			count: 2
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Property App\\Modules\\ImporRba\\Domain\\LampiranRbaParser\:\:\$level type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Domain/LampiranRbaParser.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 11
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$kelompok\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$kepala\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$nama_file\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$peringatan\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$rba_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$sheet\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$sumber_dana\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$tahun\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{0\: string, 1\?\: string, 2\?\: non\-empty\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between non\-empty\-string and '''' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Modules/ImporRba/Http/ImporRbaController.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 5
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$impor_batch_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$kodefikasi\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$nama_file\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$path_file\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$sheet\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$tahun\.$#'
+			identifier: property.notFound
+			count: 5
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Services\\ImporRbaService\:\:pratinjau\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Services\\ImporRbaService\:\:rekonsiliasi\(\) should return list\<array\{kode\: string, uraian\: string, file\: string, staging\: string, diabaikan\: string, cocok\: bool\}\> but returns array\<array\{kode\: mixed, uraian\: mixed, file\: mixed, staging\: mixed, diabaikan\: mixed, cocok\: bool\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Parameter \#1 \$path of static method Illuminate\\Contracts\\Filesystem\\Filesystem\:\:path\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/ImporRba/Services/ImporRbaService.php
+
+		-
+			message: '#^Call to an undefined method PhpOffice\\PhpSpreadsheet\\Reader\\IReader\:\:listWorksheetNames\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Modules/ImporRba/Services/PembacaXlsx.php
+
+		-
+			message: '#^Call to function method_exists\(\) with PhpOffice\\PhpSpreadsheet\\Reader\\IReader and ''setLoadSheetsOnly'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: app/Modules/ImporRba/Services/PembacaXlsx.php
+
+		-
+			message: '#^Method App\\Modules\\ImporRba\\Services\\PembacaXlsx\:\:baca\(\) should return list\<list\<mixed\>\> but returns non\-empty\-array\<int, array\<int, mixed\>\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/ImporRba/Services/PembacaXlsx.php
+
+		-
+			message: '#^Method App\\Modules\\Master\\Services\\AksesUnit\:\:unitPengguna\(\) should return list\<int\> but returns array\<int\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/Master/Services/AksesUnit.php
+
+		-
+			message: '#^Parameter \#1 \$permintaanIds of method App\\Modules\\Pergeseran\\Services\\PasanganService\:\:bentuk\(\) expects list\<int\>, array\<int\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Pergeseran/Http/PergeseranController.php
+
+		-
+			message: '#^Cannot call method format\(\) on Carbon\\CarbonImmutable\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Modules/Pergeseran/Jobs/KirimPengingatBatasWaktu.php
+
+		-
+			message: '#^Parameter \#1 \$mulai of method App\\Modules\\Shared\\Domain\\KalenderKerja\:\:hariKerjaKeBerapa\(\) expects DateTimeInterface, Carbon\\CarbonImmutable\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Pergeseran/Jobs/KirimPengingatBatasWaktu.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Revisi\\Models\\RevisiPaket\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Revisi\\Models\\RevisiPaket\>\:\:\$nomor\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$pagu_berlaku\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Cannot access property \$jenis_id on App\\Modules\\Anggaran\\Models\\PaguJenis\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Cannot access property \$sumber_dana_id on App\\Modules\\Anggaran\\Models\\PaguJenis\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Cannot access property \$tahun on App\\Modules\\Anggaran\\Models\\PaguJenis\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Cannot access property \$unit_id on App\\Modules\\Anggaran\\Models\\PaguJenis\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Method App\\Modules\\Pergeseran\\Services\\PasanganService\:\:validasiUlang\(\) has parameter \$anggota with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Method App\\Modules\\Pergeseran\\Services\\PasanganService\:\:validasiUlang\(\) has parameter \$pagu with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Parameter \#1 \$anggota of method App\\Modules\\Pergeseran\\Domain\\ValidatorPasangan\:\:periksa\(\) expects list\<App\\Modules\\Pergeseran\\Domain\\AnggotaPasangan\>, array\<int, App\\Modules\\Pergeseran\\Domain\\AnggotaPasangan\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Parameter \#1 \$paket of method App\\Modules\\Revisi\\Services\\RevisiService\:\:hitungUntukPagu\(\) expects App\\Modules\\Revisi\\Models\\RevisiPaket, App\\Modules\\Revisi\\Models\\RevisiPaket\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Revisi\\Models\\RevisiPaket\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Parameter \#2 \$pagu of method App\\Modules\\Revisi\\Services\\RevisiService\:\:hitungUntukPagu\(\) expects App\\Modules\\Anggaran\\Models\\PaguJenis, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Pergeseran/Services/PasanganService.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between App\\Modules\\Revisi\\Models\\RevisiPaket and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Modules/Pergeseran/Services/PermintaanService.php
+
+		-
+			message: '#^Method App\\Modules\\Revisi\\Http\\RevisiController\:\:simpan\(\) never returns Illuminate\\Http\\RedirectResponse so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: app/Modules/Revisi/Http/RevisiController.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Anggaran\\Models\\RbaRincian\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Anggaran\\Models\\RbaRincian\>\:\:\$jenis_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Anggaran\\Models\\RbaRincian\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Anggaran\\Models\\RbaRincian\>\:\:\$sumber_dana_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Access to an undefined property App\\Modules\\Anggaran\\Models\\RbaRincian\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Anggaran\\Models\\RbaRincian\>\:\:\$unit_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: string$#'
+			identifier: match.unhandled
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Method App\\Modules\\Revisi\\Services\\RevisiService\:\:normalisasiSesudah\(\) has parameter \$b with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Method App\\Modules\\Revisi\\Services\\RevisiService\:\:normalisasiSesudah\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Method App\\Modules\\Revisi\\Services\\RevisiService\:\:rincianAktif\(\) should return list\<App\\Modules\\Anggaran\\Models\\RbaRincian\> but returns array\<int, App\\Modules\\Anggaran\\Models\\RbaRincian\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''harga'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''harga_standar'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''item_id'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 3
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''rekening_blud_id'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''rekening_pemda_id'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''satuan'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''uraian'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Offset ''volume'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 2
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Parameter \#1 \$sebelum of static method App\\Modules\\Revisi\\Services\\RevisiService\:\:tidakBerubah\(\) expects array\<string, mixed\>\|null, array\<string, null\>\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\Anggaran\\Models\\RbaRincian\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Parameter \#3 \$draf of method App\\Modules\\Revisi\\Domain\\KalkulatorRevisi\:\:hitung\(\) expects list\<App\\Modules\\Revisi\\Domain\\BarisRevisi\>, array\<int, App\\Modules\\Revisi\\Domain\\BarisRevisi\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/Revisi/Services/RevisiService.php
+
+		-
+			message: '#^Call to function is_int\(\) with int will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: app/Modules/Shared/Domain/Uang.php
+
+		-
+			message: '#^Offset 1 on array\{0\: non\-empty\-string, 1\: ''''\|''\-'', 2\: numeric\-string, 3\?\: numeric\-string\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Modules/Shared/Domain/Uang.php
+
+		-
+			message: '#^Method App\\Modules\\Shared\\Notifikasi\\Penerima\:\:denganPermission\(\) has parameter \$unitIds with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Shared/Notifikasi/Penerima.php
+
+		-
+			message: '#^Method App\\Modules\\StandarHarga\\Domain\\SkorKecocokan\:\:kategoriTertinggi\(\) has parameter \$kategori with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/StandarHarga/Domain/SkorKecocokan.php
+
+		-
+			message: '#^Parameter \#1 \$stream of function fclose expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/StandarHarga/Http/StandarHargaController.php
+
+		-
+			message: '#^Parameter \#1 \$stream of function fputcsv expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Modules/StandarHarga/Http/StandarHargaController.php
+
+		-
+			message: '#^Method App\\Modules\\StandarHarga\\Services\\ImporUsulanStandarService\:\:validasiBaris\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/StandarHarga/Services/ImporUsulanStandarService.php
+
+		-
+			message: '#^Parameter \#1 \$import of static method Maatwebsite\\Excel\\Facades\\Excel\:\:toArray\(\) expects object, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/StandarHarga/Services/ImporUsulanStandarService.php
+
+		-
+			message: '#^Parameter \#1 \$usulan of method App\\Modules\\StandarHarga\\Services\\UsulanStandarService\:\:putuskan\(\) expects App\\Modules\\StandarHarga\\Models\\UsulanStandarHarga, App\\Modules\\StandarHarga\\Models\\UsulanStandarHarga\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Modules\\StandarHarga\\Models\\UsulanStandarHarga\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Modules/StandarHarga/Services/UsulanStandarService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:anggota\(\) should return list\<array\{label\: string, nilai\: string\}\> but returns array\<array\{label\: non\-falsy\-string, nilai\: string\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:dasar\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:pasangan\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:persetujuanUnit\(\) should return list\<array\<string, mixed\>\> but returns array\<int, non\-empty\-array\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:rba\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:revisi\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php
+
+		-
+			message: '#^Method App\\Modules\\Workflow\\Services\\KotakMasukService\:\:usulanStandar\(\) should return list\<array\<string, mixed\>\> but returns array\<int, non\-empty\-array\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Modules/Workflow/Services/KotakMasukService.php

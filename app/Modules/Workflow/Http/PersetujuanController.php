@@ -30,8 +30,8 @@ final class PersetujuanController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('Persetujuan/Index', [
-            'item' => $this->kotak->untuk($request->user()),
-            'perlu_pin' => $request->user()->pin_hash !== null,
+            'item' => $this->kotak->untuk($this->pengguna($request)),
+            'perlu_pin' => $this->pengguna($request)->pin_hash !== null,
         ]);
     }
 
@@ -44,7 +44,7 @@ final class PersetujuanController extends Controller
             'kanal' => ['nullable', 'in:WEB,MOBILE'],
             'pin' => ['nullable', 'string', 'max:12'],
         ]);
-        $user = $request->user();
+        $user = $this->pengguna($request);
         $kanal = $d['kanal'] ?? 'WEB';
         $metode = null;
 

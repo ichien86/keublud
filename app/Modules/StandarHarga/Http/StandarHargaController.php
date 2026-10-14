@@ -32,7 +32,7 @@ final class StandarHargaController extends Controller
         $daftarTahun = DB::table('standar_harga_item')->distinct()->orderBy('tahun')->pluck('tahun')->map(fn ($t) => (int) $t)->all();
         // Bawaan: tahun anggaran berjalan (RBA definitif terbaru); tahun berikutnya dipilih untuk penyusunan RBA.
         $tahun = $request->integer('tahun') ?: (int) (DB::table('rba')->where('status', 'DEFINITIF')->max('tahun') ?? (end($daftarTahun) ?: now()->year));
-        $user = $request->user();
+        $user = $this->pengguna($request);
         $db = DB::table('usulan_standar_harga as u')->leftJoin('users as p', 'p.id', '=', 'u.diajukan_oleh')
             ->where('u.tahun', $tahun)
             ->leftJoin('usulan_standar_batch as bt', 'bt.id', '=', 'u.batch_id')
@@ -94,7 +94,7 @@ final class StandarHargaController extends Controller
             'rekening_ids' => ['nullable', 'array'], 'rekening_ids.*' => ['integer'],
             'konteks' => ['nullable', 'in:PENYUSUNAN,REVISI,TRANSAKSI'], 'konteks_url' => ['nullable', 'string', 'max:500', 'starts_with:/'],
         ]);
-        $u = $this->usulan->ajukan((int) $d['tahun'], $d, $request->user());
+        $u = $this->usulan->ajukan((int) $d['tahun'], $d, $this->pengguna($request));
 
         return response()->json(['uuid' => $u->uuid, 'kategori_cocok' => $u->kategori_cocok], 201);
     }
@@ -106,7 +106,7 @@ final class StandarHargaController extends Controller
             'item_rujukan_id' => ['nullable', 'integer', 'required_if:keputusan,PAKAI_ITEM'],
             'alasan' => ['nullable', 'string', 'max:2000'],
         ]);
-        $u = $this->usulan->putuskan($usulan, $request->user(), $d['keputusan'], $d['item_rujukan_id'] ?? null, $d['alasan'] ?? null);
+        $u = $this->usulan->putuskan($usulan, $this->pengguna($request), $d['keputusan'], $d['item_rujukan_id'] ?? null, $d['alasan'] ?? null);
 
         return response()->json(['status' => $u->status]);
     }
@@ -125,19 +125,19 @@ final class StandarHargaController extends Controller
     {
         $d = $request->validate(['tahun' => ['required', 'integer'], 'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240']]);
 
-        return response()->json($this->impor->pratinjau($request->file('file'), (int) $d['tahun'], $request->user()));
+        return response()->json($this->impor->pratinjau($request->file('file'), (int) $d['tahun'], $this->pengguna($request)));
     }
 
     public function imporAjukan(Request $request, UsulanStandarBatch $batch): JsonResponse
     {
         $d = $request->validate(['baris' => ['required', 'array', 'min:1']]);
-        $b = $this->impor->ajukan($batch, $d['baris'], $request->user());
+        $b = $this->impor->ajukan($batch, $d['baris'], $this->pengguna($request));
 
         return response()->json(['status' => $b->status, 'jumlah' => $b->jumlah_baris]);
     }
 
     public function sahkanMemenuhiSyarat(Request $request, UsulanStandarBatch $batch): JsonResponse
     {
-        return response()->json($this->usulan->sahkanMemenuhiSyarat($batch, $request->user()));
+        return response()->json($this->usulan->sahkanMemenuhiSyarat($batch, $this->pengguna($request)));
     }
 }
