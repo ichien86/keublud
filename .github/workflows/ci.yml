@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  uji:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: keuangan_blud_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DB_HOST: 127.0.0.1
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      PGHOST: 127.0.0.1
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_pgsql, intl, zip, redis
+          coverage: none
+      - name: Pemeriksaan cepat domain murni (tanpa Composer)
+        run: php tests/standalone/run.php
+      - name: Uji skema & aturan database
+        run: bash tests/sql/run.sh
+      - name: Pasang dependensi
+        run: composer install --no-interaction --prefer-dist
+      - name: Gaya kode
+        run: vendor/bin/pint --test
+      - name: Analisis statis
+        run: vendor/bin/phpstan analyse --memory-limit=1G
+      - name: Keamanan dependensi
+        run: composer audit
+      - name: Uji aplikasi (unit, arsitektur, fitur)
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan test
+      - name: Migrasi dapat dibatalkan
+        run: php artisan migrate:fresh --force && php artisan migrate:rollback --force
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci || npm install
+      - run: npm run build
+
+  rahasia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2

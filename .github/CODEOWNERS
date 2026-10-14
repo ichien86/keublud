@@ -1,0 +1,7 @@
+# Modul kritis wajib ditinjau tech lead (TDD 16.4). Ganti @tech-lead dengan akun sebenarnya.
+/database/sql/                     @tech-lead
+/app/Modules/Anggaran/             @tech-lead
+/app/Modules/Revisi/               @tech-lead
+/app/Modules/Pergeseran/           @tech-lead
+/app/Modules/Workflow/             @tech-lead
+/AGENTS.md                         @tech-lead

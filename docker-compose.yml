@@ -1,0 +1,60 @@
+# Ujicoba lokal: `docker compose up` lalu buka http://localhost:8000
+# Data demo dimuat otomatis pada start pertama (lihat database/seeders/DemoSeeder.php).
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: keuangan_blud
+      POSTGRES_USER: keuangan_blud
+      POSTGRES_PASSWORD: rahasia-lokal
+      TZ: Asia/Jakarta
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keuangan_blud -d keuangan_blud"]
+      interval: 3s
+      retries: 20
+
+  aset:
+    image: node:22-alpine
+    working_dir: /app
+    volumes: [".:/app"]
+    command: sh -c "npm ci --no-audit --no-fund && npm run build"
+
+  app:
+    build: { context: ., dockerfile: docker/Dockerfile }
+    working_dir: /app
+    volumes: [".:/app"]
+    ports: ["8000:8000"]
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: keuangan_blud
+      DB_USERNAME: keuangan_blud
+      DB_PASSWORD: rahasia-lokal
+      APP_URL: http://localhost:8000
+    depends_on:
+      db: { condition: service_healthy }
+      aset: { condition: service_completed_successfully }
+    command:
+      - sh
+      - -c
+      - |
+        set -e
+        [ -f .env ] || cp .env.example .env
+        [ -d vendor ] || composer install --no-interaction --prefer-dist
+        grep -q '^APP_KEY=base64' .env || php artisan key:generate --force
+        if [ "$$(psql "postgresql://keuangan_blud:rahasia-lokal@db/keuangan_blud" -tAc "select to_regclass('public.users') is not null")" != "t" ]; then
+          php artisan migrate --force
+          php artisan db:seed --class=DemoSeeder --force
+        else
+          php artisan migrate --force
+          php artisan db:seed --class=PeranSeeder --force
+        fi
+        php artisan schedule:work > storage/logs/schedule.log 2>&1 &
+        exec php artisan serve --host=0.0.0.0 --port=8000
+
+volumes:
+  pgdata:

@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@source "../views";
+@source "../js";
+
+:root { color-scheme: light; }
+.angka { font-variant-numeric: tabular-nums; }
