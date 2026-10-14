@@ -11,7 +11,7 @@ class PasanganPergeseran extends ModelBlud
 {
     protected $table = 'pasangan_pergeseran';
 
-    protected $casts = ['jenis_id' => 'integer', 'sumber_dana_id' => 'integer', 'tahun' => 'integer', 'dibentuk_oleh' => 'integer', 
+    protected $casts = ['jenis_id' => 'integer', 'sumber_dana_id' => 'integer', 'tahun' => 'integer', 'dibentuk_oleh' => 'integer',
         'lengkap_pada' => 'immutable_datetime',
         'batas_pengesahan' => 'immutable_datetime',
         'diputuskan_pada' => 'immutable_datetime',

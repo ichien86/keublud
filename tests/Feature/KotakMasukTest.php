@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Modules\Workflow\Services\KotakMasukService;
 use Database\Seeders\DemoSeeder;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,7 @@ test('akun nonaktif tidak dapat masuk', function () {
 });
 
 test('kotak masuk menampilkan pengajuan sesuai kewenangan', function () {
-    $tipe = fn (string $k) => collect(app(\App\Modules\Workflow\Services\KotakMasukService::class)->untuk(($this->user)($k)))->pluck('tipe')->sort()->values()->all();
+    $tipe = fn (string $k) => collect(app(KotakMasukService::class)->untuk(($this->user)($k)))->pluck('tipe')->sort()->values()->all();
 
     expect($tipe('kafarmasi'))->toBe(['PASANGAN_UNIT']);
     expect($tipe('kalab'))->toBe(['PASANGAN_UNIT']);
@@ -50,7 +51,7 @@ test('pimpinan menetapkan RBA dari kotak masuk dengan PIN dan pagu tahun berikut
 test('pergeseran demo dapat diselesaikan dari kotak masuk: dua kepala unit lalu perencana', function () {
     $pasangan = DB::table('pasangan_pergeseran')->first();
     foreach (['kafarmasi', 'kalab'] as $k) {
-        $item = collect(app(\App\Modules\Workflow\Services\KotakMasukService::class)->untuk(($this->user)($k)))->firstWhere('tipe', 'PASANGAN_UNIT');
+        $item = collect(app(KotakMasukService::class)->untuk(($this->user)($k)))->firstWhere('tipe', 'PASANGAN_UNIT');
         $this->actingAs(($this->user)($k))
             ->postJson("/persetujuan/PASANGAN_UNIT/{$pasangan->id}", ['keputusan' => 'SETUJUI', 'permintaan_id' => $item['permintaan_id']])->assertOk();
     }

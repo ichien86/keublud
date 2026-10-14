@@ -2,6 +2,8 @@
 
 // @butuh-vendor (PhpSpreadsheet)
 
+use App\Modules\ImporRba\Domain\BarisRba;
+use App\Modules\ImporRba\Domain\HasilBacaRba;
 use App\Modules\ImporRba\Domain\LampiranRbaParser;
 use App\Modules\ImporRba\Services\PembacaXlsx;
 use App\Modules\Shared\Domain\Uang;
@@ -14,7 +16,7 @@ function bacaContoh(string $sheet, int $kelompok = 0)
     return (new LampiranRbaParser)->baca((new PembacaXlsx)->baca($f, $sheet), $kelompok);
 }
 
-function baris(\App\Modules\ImporRba\Domain\HasilBacaRba $h, int $no): \App\Modules\ImporRba\Domain\BarisRba
+function baris(HasilBacaRba $h, int $no): BarisRba
 {
     return collect($h->baris)->first(fn ($b) => $b->baris === $no) ?? throw new RuntimeException("baris {$no} tidak ada");
 }

@@ -11,7 +11,9 @@ use InvalidArgumentException;
 final class BarisRevisi
 {
     public const TAMBAH = 'TAMBAH';
+
     public const UBAH = 'UBAH';
+
     public const HAPUS = 'HAPUS';
 
     public function __construct(

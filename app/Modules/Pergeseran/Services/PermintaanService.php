@@ -116,7 +116,7 @@ final class PermintaanService
         $this->audit->tindakan($status, 'permintaan_pergeseran', $m->id, $alasan, sistem: $status === 'DITOLAK_OTOMATIS');
 
         DB::afterCommit(function () use ($m, $status, $alasan) {
-            $pengusul = \App\Models\User::query()->find($m->diajukan_oleh);
+            $pengusul = User::query()->find($m->diajukan_oleh);
             $pengusul?->notify(new NotifikasiBlud('PERMINTAAN_'.$status, "Permintaan {$m->nomor} {$this->label($status)}", $alasan,
                 "/pergeseran/permintaan/{$m->uuid}", true));
         });

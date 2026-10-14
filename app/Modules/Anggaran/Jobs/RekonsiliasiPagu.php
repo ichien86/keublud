@@ -31,7 +31,7 @@ final class RekonsiliasiPagu implements ShouldQueue
         DB::table('konfigurasi')->updateOrInsert(
             ['kunci' => 'job.rekonsiliasi_pagu.terakhir'],
             ['nilai' => json_encode(['waktu' => now()->toIso8601String(), 'tahun' => $tahun, 'jumlah_selisih' => count($selisih)]),
-             'diubah_pada' => now()]
+                'diubah_pada' => now()]
         );
     }
 }

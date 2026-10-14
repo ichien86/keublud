@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Modules\ImporRba\Services;
 
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
 
 /**
  * Membaca satu sheet sebagai larik nilai (bukan rumus). File RBA bisa ±22 MB dengan puluhan sheet,
@@ -40,7 +42,7 @@ final class PembacaXlsx
             public function readCell($columnAddress, $row, $worksheetName = ''): bool
             {
                 return $row <= PembacaXlsx::MAKS_BARIS
-                    && \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($columnAddress) <= PembacaXlsx::MAKS_KOLOM;
+                    && Coordinate::columnIndexFromString($columnAddress) <= PembacaXlsx::MAKS_KOLOM;
             }
         });
 
@@ -53,9 +55,9 @@ final class PembacaXlsx
             $iterator = $baris->getCellIterator();
             $iterator->setIterateOnlyExistingCells(true);
             foreach ($iterator as $sel) {
-                $j = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($sel->getColumn()) - 1;
+                $j = Coordinate::columnIndexFromString($sel->getColumn()) - 1;
                 $nilai = $sel->getDataType() === DataType::TYPE_FORMULA ? $sel->getOldCalculatedValue() : $sel->getValue();
-                if ($nilai instanceof \PhpOffice\PhpSpreadsheet\RichText\RichText) {
+                if ($nilai instanceof RichText) {
                     $nilai = $nilai->getPlainText();
                 }
                 if ($nilai !== null && $nilai !== '') {

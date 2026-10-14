@@ -30,8 +30,8 @@ final class LampiranRbaParser
     private const PENANDA_KELOMPOK = '/^([A-Z]|\d{1,2}|[a-z])[.)]?$/';
 
     /**
-     * @param list<list<mixed>> $baris
-     * @param int $kelompok indeks kelompok nilai (0 = kelompok pertama, mis. Penetapan; 1 = kelompok kedua, mis. Perubahan)
+     * @param  list<list<mixed>>  $baris
+     * @param  int  $kelompok  indeks kelompok nilai (0 = kelompok pertama, mis. Penetapan; 1 = kelompok kedua, mis. Perubahan)
      */
     public function baca(array $baris, int $kelompok = 0): HasilBacaRba
     {
@@ -41,7 +41,7 @@ final class LampiranRbaParser
         }
         ['baris' => $h, 'kode' => $kolKode, 'komponen' => $kolKomponen, 'kelompok' => $daftarKelompok] = $judul;
         if (! isset($daftarKelompok[$kelompok])) {
-            return HasilBacaRba::gagal("Kelompok nilai ke-".($kelompok + 1).' tidak ada di sheet ini.');
+            return HasilBacaRba::gagal('Kelompok nilai ke-'.($kelompok + 1).' tidak ada di sheet ini.');
         }
         $k = $daftarKelompok[$kelompok];
         $kolLabel = $daftarKelompok[0]['jml'] - 1;
@@ -93,6 +93,7 @@ final class LampiranRbaParser
                     $pemda6 = null;
                 }
                 $labelLevel = [1 => null, 2 => null];
+
                 continue;
             }
 
@@ -120,10 +121,12 @@ final class LampiranRbaParser
                     if (count($segmen) === 1) {
                         $labelLevel[2] = null;
                     }
+
                     continue;
                 }
                 if ($jenis === null) {
                     $hasil->peringatan[] = 'Baris '.($i + 1).': kode rinci tanpa rekening jenis di atasnya, dilewati.';
+
                     continue;
                 }
                 [$teksKol, $teks] = $this->teksDalam($r, $kolTeksAwal, $kolTeksAkhir);
@@ -139,6 +142,7 @@ final class LampiranRbaParser
                     'anak' => [],
                     'kedalaman' => $teksKol ?? $kolTeksAwal,
                 ];
+
                 continue;
             }
 
@@ -397,7 +401,7 @@ final class LampiranRbaParser
     /**
      * Memakai rincian anak bila jumlahnya tepat sama dengan nilai simpul; bila tidak, simpul itu sendiri satu baris.
      *
-     * @param list<string> $jalur
+     * @param  list<string>  $jalur
      * @return list<BarisRba>
      */
     private function pecah(array $simpul, ?Uang $target, array $jalur, ?string $label, HasilBacaRba $hasil): array

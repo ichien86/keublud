@@ -14,8 +14,8 @@ use Throwable;
 class KesalahanDomain extends RuntimeException
 {
     /**
-     * @param array<string, mixed> $detail
-     * @param array{label: string, url: string}|null $tindakan
+     * @param  array<string, mixed>  $detail
+     * @param  array{label: string, url: string}|null  $tindakan
      */
     public function __construct(
         public readonly string $kode,
@@ -52,8 +52,8 @@ class KesalahanDomain extends RuntimeException
             return new self($m[1], trim($m[2]), sebelumnya: $e);
         }
         foreach (['pagu_sisa_tidak_negatif' => 'SISA_PAGU_TIDAK_CUKUP', 'rincian_tidak_di_bawah_pemakaian' => 'DI_BAWAH_PEMAKAIAN',
-                  'rincian_harga_sah' => 'HARGA_DI_ATAS_STANDAR', 'pasangan_seimbang' => 'PASANGAN_TIDAK_SEIMBANG',
-                  'anggota_unik_aktif' => 'PERMINTAAN_SUDAH_BERPASANGAN'] as $constraint => $kode) {
+            'rincian_harga_sah' => 'HARGA_DI_ATAS_STANDAR', 'pasangan_seimbang' => 'PASANGAN_TIDAK_SEIMBANG',
+            'anggota_unik_aktif' => 'PERMINTAAN_SUDAH_BERPASANGAN'] as $constraint => $kode) {
             if (str_contains($pesan, $constraint)) {
                 return new self($kode, 'Data ditolak oleh aturan basis data ('.$constraint.').', sebelumnya: $e);
             }

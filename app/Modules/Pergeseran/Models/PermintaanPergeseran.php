@@ -13,7 +13,7 @@ class PermintaanPergeseran extends ModelBlud
 {
     protected $table = 'permintaan_pergeseran';
 
-    protected $casts = ['pagu_jenis_id' => 'integer', 'revisi_paket_id' => 'integer', 'diajukan_oleh' => 'integer', 
+    protected $casts = ['pagu_jenis_id' => 'integer', 'revisi_paket_id' => 'integer', 'diajukan_oleh' => 'integer',
         'diajukan_pada' => 'immutable_datetime',
         'batas_pasangan' => 'immutable_datetime',
         'memuat_di_atas_standar' => 'boolean',

@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Notification;
  *  - boleh otomatis (tanpa harga di atas standar, jenis diizinkan) -> sahkan oleh sistem, didahului validasi ulang;
  *  - tidak boleh otomatis -> tetap menunggu, pengingat dikirim sekali per hari kerja (UAT-45).
  */
-final class ProsesBatasPengesahan implements ShouldQueue, ShouldBeUnique
+final class ProsesBatasPengesahan implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
 

@@ -5,7 +5,7 @@ use App\Modules\Shared\Domain\KalenderKerja;
 $wib = new DateTimeZone('Asia/Jakarta');
 
 test('lima hari kerja dari Senin berakhir Senin berikutnya pukul 23:59:59', function () use ($wib) {
-    $k = new KalenderKerja();
+    $k = new KalenderKerja;
     $batas = $k->akhirHariKerjaKe(new DateTimeImmutable('2026-10-12 09:00', $wib), 5);   // Senin
     expect($batas->format('Y-m-d H:i:s'))->toBe('2026-10-19 23:59:59');
 });
@@ -19,20 +19,20 @@ test('UAT-42 akhir pekan dan libur nasional tidak dihitung', function () use ($w
 });
 
 test('pengajuan pada hari Sabtu dihitung mulai Senin', function () use ($wib) {
-    $k = new KalenderKerja();
+    $k = new KalenderKerja;
     $batas = $k->akhirHariKerjaKe(new DateTimeImmutable('2026-10-17 10:00', $wib), 1);
     expect($batas->format('Y-m-d'))->toBe('2026-10-19');
 });
 
 test('waktu UTC dikonversi ke WIB sebelum dihitung', function () {
-    $k = new KalenderKerja();
+    $k = new KalenderKerja;
     // Jumat 23:30 UTC = Sabtu 06:30 WIB -> hari kerja pertama Senin
     $batas = $k->akhirHariKerjaKe(new DateTimeImmutable('2026-10-16 23:30', new DateTimeZone('UTC')), 1);
     expect($batas->format('Y-m-d'))->toBe('2026-10-19');
 });
 
 test('hari kerja ke berapa untuk pengingat', function () use ($wib) {
-    $k = new KalenderKerja();
+    $k = new KalenderKerja;
     $mulai = new DateTimeImmutable('2026-10-12 09:00', $wib);
     expect($k->hariKerjaKeBerapa($mulai, new DateTimeImmutable('2026-10-15 08:00', $wib)))->toBe(3);
     expect($k->hariKerjaKeBerapa($mulai, new DateTimeImmutable('2026-10-12 15:00', $wib)))->toBe(0);

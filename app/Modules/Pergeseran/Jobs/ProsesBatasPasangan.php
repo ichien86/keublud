@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Log;
  *  - pasangan yang masih MENUNGGU_UNIT padahal batas salah satu anggotanya lewat -> dibubarkan.
  * Idempoten: status diperiksa ulang di dalam transaksi terkunci.
  */
-final class ProsesBatasPasangan implements ShouldQueue, ShouldBeUnique
+final class ProsesBatasPasangan implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
 

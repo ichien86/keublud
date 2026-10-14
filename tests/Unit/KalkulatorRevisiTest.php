@@ -10,17 +10,17 @@ function rincian(int $id, string $nilai, string $pakai = '0', bool $kunci = fals
     return new RincianBerlaku($id, Uang::dari($nilai), Uang::dari($pakai), Uang::nol(), 1, $kunci);
 }
 
-function ubah(int $id, string $vol, string $harga, string $std = null): BarisRevisi
+function ubah(int $id, string $vol, string $harga, ?string $std = null): BarisRevisi
 {
     return new BarisRevisi('UBAH', $id, $vol, Uang::dari($harga), Uang::dari($std ?? $harga), 1);
 }
 
-function tambah(string $vol, string $harga, string $std = null): BarisRevisi
+function tambah(string $vol, string $harga, ?string $std = null): BarisRevisi
 {
     return new BarisRevisi('TAMBAH', null, $vol, Uang::dari($harga), Uang::dari($std ?? $harga));
 }
 
-$k = new KalkulatorRevisi();
+$k = new KalkulatorRevisi;
 $pagu = Uang::dari('100000000');
 $rincian = [rincian(1, '60000000'), rincian(2, '40000000')];
 

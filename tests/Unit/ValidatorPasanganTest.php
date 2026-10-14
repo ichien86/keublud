@@ -10,7 +10,7 @@ function anggota(int $id, string $arah, string $nilai, int $unit, int $jenis = 3
         new DateTimeImmutable('2026-10-20 23:59:59'), $diAtas);
 }
 
-$v = new ValidatorPasangan();
+$v = new ValidatorPasangan;
 $kini = new DateTimeImmutable('2026-10-14 10:00');
 
 test('UAT-37 pasangan tambah dan kurang seimbang valid', function () use ($v, $kini) {

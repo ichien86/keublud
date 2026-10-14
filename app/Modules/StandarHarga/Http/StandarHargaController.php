@@ -13,6 +13,9 @@ use App\Modules\StandarHarga\Services\StandarHargaMatcher;
 use App\Modules\StandarHarga\Services\UsulanStandarService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class StandarHargaController extends Controller
@@ -24,13 +27,13 @@ final class StandarHargaController extends Controller
     ) {}
 
     /** Halaman katalog, formulir usulan, dan keputusan perencana (PRD 7.4). */
-    public function index(Request $request): \Inertia\Response
+    public function index(Request $request): Response
     {
-        $daftarTahun = \Illuminate\Support\Facades\DB::table('standar_harga_item')->distinct()->orderBy('tahun')->pluck('tahun')->map(fn ($t) => (int) $t)->all();
+        $daftarTahun = DB::table('standar_harga_item')->distinct()->orderBy('tahun')->pluck('tahun')->map(fn ($t) => (int) $t)->all();
         // Bawaan: tahun anggaran berjalan (RBA definitif terbaru); tahun berikutnya dipilih untuk penyusunan RBA.
-        $tahun = $request->integer('tahun') ?: (int) (\Illuminate\Support\Facades\DB::table('rba')->where('status', 'DEFINITIF')->max('tahun') ?? (end($daftarTahun) ?: now()->year));
+        $tahun = $request->integer('tahun') ?: (int) (DB::table('rba')->where('status', 'DEFINITIF')->max('tahun') ?? (end($daftarTahun) ?: now()->year));
         $user = $request->user();
-        $db = \Illuminate\Support\Facades\DB::table('usulan_standar_harga as u')->leftJoin('users as p', 'p.id', '=', 'u.diajukan_oleh')
+        $db = DB::table('usulan_standar_harga as u')->leftJoin('users as p', 'p.id', '=', 'u.diajukan_oleh')
             ->where('u.tahun', $tahun)
             ->leftJoin('usulan_standar_batch as bt', 'bt.id', '=', 'u.batch_id')
             ->select(['bt.uuid as batch_uuid', 'u.id', 'u.uuid', 'u.uraian', 'u.spesifikasi', 'u.satuan', 'u.harga', 'u.kategori_cocok', 'u.status', 'u.alasan_keputusan',
@@ -38,14 +41,14 @@ final class StandarHargaController extends Controller
         $menunggu = $user->can('standar.putuskan')
             ? (clone $db)->where('u.status', 'DIAJUKAN')->where('u.diajukan_oleh', '<>', $user->id)->orderBy('u.dibuat_pada')->limit(100)->get()
             : collect();
-        $cocok = \Illuminate\Support\Facades\DB::table('usulan_kecocokan as k')->join('standar_harga_item as i', 'i.id', '=', 'k.item_id')
+        $cocok = DB::table('usulan_kecocokan as k')->join('standar_harga_item as i', 'i.id', '=', 'k.item_id')
             ->whereIn('k.usulan_id', $menunggu->pluck('id'))->where('k.tahap', 'DIAJUKAN')->orderByDesc('k.skor')
             ->get(['k.usulan_id', 'k.skor', 'i.id', 'i.uraian', 'i.spesifikasi', 'i.satuan', 'i.harga'])->groupBy('usulan_id');
 
-        return \Inertia\Inertia::render('StandarHarga/Index', [
+        return Inertia::render('StandarHarga/Index', [
             'tahun' => $tahun,
             'daftar_tahun' => $daftarTahun,
-            'jumlah_item' => \Illuminate\Support\Facades\DB::table('standar_harga_item')->where('tahun', $tahun)->where('status', 'AKTIF')->count(),
+            'jumlah_item' => DB::table('standar_harga_item')->where('tahun', $tahun)->where('status', 'AKTIF')->count(),
             'usulan_saya' => (clone $db)->where('u.diajukan_oleh', $user->id)->orderByDesc('u.dibuat_pada')->limit(50)->get(),
             'usulan_menunggu' => $menunggu->map(fn ($u) => [...(array) $u, 'kecocokan' => $cocok->get($u->id, collect())->take(3)->values()]),
             'boleh_usul' => $user->can('standar.usul'),
@@ -69,7 +72,7 @@ final class StandarHargaController extends Controller
     public function cari(Request $request): JsonResponse
     {
         $d = $request->validate(['tahun' => ['required', 'integer'], 'q' => ['required', 'string', 'min:2']]);
-        $item = \Illuminate\Support\Facades\DB::select(
+        $item = DB::select(
             "SELECT id, sumber, kode_barang, uraian, spesifikasi, satuan, harga::text AS harga, tambahan_tengah_tahun
                FROM standar_harga_item
               WHERE tahun = ? AND status = 'AKTIF' AND berlaku_mulai <= current_date

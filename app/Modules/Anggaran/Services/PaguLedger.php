@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\DB;
 final class PaguLedger
 {
     public const PAGU = 'PAGU';
+
     public const REALISASI = 'REALISASI';
+
     public const KOMITMEN = 'KOMITMEN';
+
     public const TERCADANG = 'TERCADANG';
 
     public function catat(int $paguJenisId, string $komponen, Uang $nilai, string $sumberTipe, int $sumberId, ?string $keterangan = null): void

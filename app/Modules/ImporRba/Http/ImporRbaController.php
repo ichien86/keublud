@@ -26,7 +26,7 @@ final class ImporRbaController extends Controller
                 ->leftJoin('users as u', 'u.id', '=', 'i.dibuat_oleh')
                 ->orderByDesc('i.dibuat_pada')->limit(30)
                 ->get(['i.uuid', 'i.tahun', 'i.sheet', 'i.kelompok', 'i.status', 'i.dibuat_pada', 'b.nama_file', 'u.name as oleh',
-                    DB::raw("(SELECT count(*) FROM staging_rba s WHERE s.impor_rba_id = i.id) AS jumlah"),
+                    DB::raw('(SELECT count(*) FROM staging_rba s WHERE s.impor_rba_id = i.id) AS jumlah'),
                     DB::raw("(SELECT count(*) FROM staging_rba s WHERE s.impor_rba_id = i.id AND s.status IN ('SIAP','DIABAIKAN')) AS selesai")]),
             'sumber_dana' => DB::table('sumber_dana')->where('aktif', true)->orderByRaw("kelompok <> 'PENDAPATAN_BLUD'")->orderBy('kode')->get(['id', 'kode', 'nama']),
             'batas_unggah_mb' => (int) floor(min($this->bytes(ini_get('upload_max_filesize')), $this->bytes(ini_get('post_max_size'))) / 1048576),

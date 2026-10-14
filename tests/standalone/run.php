@@ -38,20 +38,53 @@ final class Harapan
         return $this;
     }
 
-    public function toBe(mixed $harap): self { return $this->cek($this->nilai === $harap, 'diharapkan '.var_export($harap, true).', didapat '.var_export($this->nilai, true)); }
-    public function toEqual(mixed $harap): self { return $this->cek($this->nilai == $harap, 'diharapkan sama dengan '.var_export($harap, true)); }
-    public function toBeTrue(): self { return $this->toBe(true); }
-    public function toBeFalse(): self { return $this->toBe(false); }
-    public function toBeNull(): self { return $this->toBe(null); }
-    public function toBeGreaterThan(int|float $n): self { return $this->cek($this->nilai > $n, "diharapkan > {$n}, didapat ".var_export($this->nilai, true)); }
-    public function toBeLessThan(int|float $n): self { return $this->cek($this->nilai < $n, "diharapkan < {$n}, didapat ".var_export($this->nilai, true)); }
-    public function toHaveCount(int $n): self { return $this->cek(count($this->nilai) === $n, "diharapkan {$n} elemen, didapat ".count($this->nilai)); }
+    public function toBe(mixed $harap): self
+    {
+        return $this->cek($this->nilai === $harap, 'diharapkan '.var_export($harap, true).', didapat '.var_export($this->nilai, true));
+    }
+
+    public function toEqual(mixed $harap): self
+    {
+        return $this->cek($this->nilai == $harap, 'diharapkan sama dengan '.var_export($harap, true));
+    }
+
+    public function toBeTrue(): self
+    {
+        return $this->toBe(true);
+    }
+
+    public function toBeFalse(): self
+    {
+        return $this->toBe(false);
+    }
+
+    public function toBeNull(): self
+    {
+        return $this->toBe(null);
+    }
+
+    public function toBeGreaterThan(int|float $n): self
+    {
+        return $this->cek($this->nilai > $n, "diharapkan > {$n}, didapat ".var_export($this->nilai, true));
+    }
+
+    public function toBeLessThan(int|float $n): self
+    {
+        return $this->cek($this->nilai < $n, "diharapkan < {$n}, didapat ".var_export($this->nilai, true));
+    }
+
+    public function toHaveCount(int $n): self
+    {
+        return $this->cek(count($this->nilai) === $n, "diharapkan {$n} elemen, didapat ".count($this->nilai));
+    }
+
     public function toContain(mixed $v): self
     {
         $ada = is_string($this->nilai) ? str_contains($this->nilai, (string) $v) : in_array($v, $this->nilai, true);
 
         return $this->cek($ada, 'diharapkan memuat '.var_export($v, true));
     }
+
     public function toThrow(string $kelas): self
     {
         try {
@@ -65,9 +98,18 @@ final class Harapan
 }
 
 $GLOBALS['__uji'] = [];
-function test(string $nama, Closure $fn): void { $GLOBALS['__uji'][] = [$nama, $fn]; }
-function it(string $nama, Closure $fn): void { test('it '.$nama, $fn); }
-function expect(mixed $nilai): Harapan { return new Harapan($nilai); }
+function test(string $nama, Closure $fn): void
+{
+    $GLOBALS['__uji'][] = [$nama, $fn];
+}
+function it(string $nama, Closure $fn): void
+{
+    test('it '.$nama, $fn);
+}
+function expect(mixed $nilai): Harapan
+{
+    return new Harapan($nilai);
+}
 
 $lulus = 0;
 $gagal = 0;
@@ -77,6 +119,7 @@ foreach (glob(__DIR__.'/../Unit/*Test.php') as $berkas) {
     if (str_contains((string) file_get_contents($berkas), '@butuh-vendor')) {
         $dilewati++;
         echo 'LEWAT '.basename($berkas, '.php')." (butuh composer install; jalankan php artisan test)\n";
+
         continue;
     }
     $GLOBALS['__uji'] = [];
@@ -85,10 +128,10 @@ foreach (glob(__DIR__.'/../Unit/*Test.php') as $berkas) {
         try {
             $fn();
             $lulus++;
-            echo "PASS ".basename($berkas, '.php')." › {$nama}\n";
+            echo 'PASS '.basename($berkas, '.php')." › {$nama}\n";
         } catch (Throwable $e) {
             $gagal++;
-            echo "FAIL ".basename($berkas, '.php')." › {$nama}\n     ".$e->getMessage()."\n";
+            echo 'FAIL '.basename($berkas, '.php')." › {$nama}\n     ".$e->getMessage()."\n";
         }
     }
 }

@@ -14,13 +14,16 @@ use App\Modules\Shared\Domain\Uang;
 final class SkorKecocokan
 {
     public const TANPA = 'TANPA';
+
     public const RENDAH = 'RENDAH';
+
     public const SEDANG = 'SEDANG';
+
     public const TINGGI = 'TINGGI';
 
     /**
-     * @param array{uraian: float, kode: float, satuan: float, harga: float} $bobot
-     * @param array{tinggi: float, sedang: float, rendah: float} $ambang
+     * @param  array{uraian: float, kode: float, satuan: float, harga: float}  $bobot
+     * @param  array{tinggi: float, sedang: float, rendah: float}  $ambang
      */
     public function __construct(
         private readonly array $bobot = ['uraian' => 0.55, 'kode' => 0.15, 'satuan' => 0.15, 'harga' => 0.15],

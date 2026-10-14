@@ -26,6 +26,7 @@ use App\Modules\Shared\Penomoran\PenomoranService;
 use App\Modules\Shared\Support\Kunci;
 use App\Modules\StandarHarga\Models\StandarHargaItem;
 use App\Modules\Workflow\Services\WorkflowService;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -68,7 +69,7 @@ final class RevisiService
      * Menyimpan seluruh baris draf (autosave). Setiap baris:
      *   aksi, rincian_id?, row_version?, item_id, rekening_blud_id, volume, harga, uraian?, sub_kegiatan_id?
      *
-     * @param list<array<string, mixed>> $baris
+     * @param  list<array<string, mixed>>  $baris
      */
     public function simpanBaris(RevisiPaket $paket, User $user, array $baris): HasilRevisi
     {
@@ -365,12 +366,12 @@ final class RevisiService
      * Validasi baris yang akan ditulis: item aktif & setahun, rekening sejenis dengan pagu (via pemetaan),
      * harga standar diambil dari item (bukan dari klien).
      *
-     * @param array<string, mixed> $b
+     * @param  array<string, mixed>  $b
      * @return array<string, mixed>
      */
     /**
-     * @param array<string, mixed>|null $sebelum
-     * @param array<string, mixed>|null $sesudah
+     * @param  array<string, mixed>|null  $sebelum
+     * @param  array<string, mixed>|null  $sesudah
      */
     private static function tidakBerubah(?array $sebelum, ?array $sesudah): bool
     {
@@ -448,7 +449,7 @@ final class RevisiService
     }
 
     /** Menyimpan berkas bukti harga untuk satu baris draf. */
-    public function lampirkanBukti(RevisiPaket $paket, User $user, ?int $rincianId, int $itemId, \Illuminate\Http\UploadedFile $file): void
+    public function lampirkanBukti(RevisiPaket $paket, User $user, ?int $rincianId, int $itemId, UploadedFile $file): void
     {
         $this->pastikanDrafMilik($paket, $user);
         $path = $file->store('lampiran/revisi/'.$paket->uuid);

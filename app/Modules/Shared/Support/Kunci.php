@@ -17,8 +17,9 @@ final class Kunci
 {
     /**
      * @template T of Model
-     * @param class-string<T> $model
-     * @param iterable<int> $ids
+     *
+     * @param  class-string<T>  $model
+     * @param  iterable<int>  $ids
      * @return Collection<int, T>
      */
     public static function baris(string $model, iterable $ids): Collection

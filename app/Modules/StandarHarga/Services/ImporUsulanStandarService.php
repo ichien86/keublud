@@ -59,7 +59,7 @@ final class ImporUsulanStandarService
                 $nomor = $i + 2;
                 $ambil = static fn (string $k) => isset($idx[$k]) ? trim((string) ($row[$idx[$k]] ?? '')) : '';
                 $data = ['kode_barang' => $ambil('kode_barang') ?: null, 'uraian' => $ambil('uraian'), 'spesifikasi' => $ambil('spesifikasi') ?: null,
-                         'satuan' => $ambil('satuan'), 'harga' => str_replace([',', ' '], ['', ''], $ambil('harga')), 'kategori' => $ambil('kategori') ?: null];
+                    'satuan' => $ambil('satuan'), 'harga' => str_replace([',', ' '], ['', ''], $ambil('harga')), 'kategori' => $ambil('kategori') ?: null];
 
                 $galat = $this->validasiBaris($data, $sudah);
                 if ($galat !== null) {
@@ -88,7 +88,7 @@ final class ImporUsulanStandarService
     /**
      * Mengajukan baris valid dari pratinjau sebagai satu batch. $baris = baris pratinjau yang dipertahankan pengusul.
      *
-     * @param list<array<string, mixed>> $baris
+     * @param  list<array<string, mixed>>  $baris
      */
     public function ajukan(UsulanStandarBatch $batch, array $baris, User $user): UsulanStandarBatch
     {

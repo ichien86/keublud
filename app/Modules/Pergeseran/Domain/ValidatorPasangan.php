@@ -14,7 +14,7 @@ use DateTimeImmutable;
 final class ValidatorPasangan
 {
     /**
-     * @param list<AnggotaPasangan> $anggota
+     * @param  list<AnggotaPasangan>  $anggota
      * @return array{valid: bool, galat: list<string>, total_tambah: Uang, total_kurang: Uang,
      *               memuat_di_atas_standar: bool, jenis_id: ?int, sumber_dana_id: ?int, tahun: ?int}
      */
@@ -86,7 +86,7 @@ final class ValidatorPasangan
     /**
      * Apakah pasangan boleh disetujui otomatis setelah batas waktu (PRD 7.8a butir 9, D-22, K-25).
      *
-     * @param list<string>|null $jenisBolehOtomatis kode jenis; null = semua
+     * @param  list<string>|null  $jenisBolehOtomatis  kode jenis; null = semua
      */
     public static function bolehOtomatis(bool $memuatDiAtasStandar, string $kodeJenis, bool $fiturAktif, ?array $jenisBolehOtomatis): bool
     {

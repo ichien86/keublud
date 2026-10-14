@@ -24,7 +24,9 @@ use Illuminate\Support\Facades\DB;
 final class UsulanStandarService
 {
     public const SAHKAN = 'SAHKAN';
+
     public const PAKAI_ITEM = 'PAKAI_ITEM';
+
     public const KEMBALIKAN = 'KEMBALIKAN';
 
     public function __construct(

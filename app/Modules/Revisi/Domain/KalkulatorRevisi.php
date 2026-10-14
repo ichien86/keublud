@@ -14,17 +14,22 @@ use App\Modules\Shared\Domain\Uang;
 final class KalkulatorRevisi
 {
     public const SEIMBANG = 'SEIMBANG';
+
     public const BERTAMBAH = 'BERTAMBAH';
+
     public const BERKURANG = 'BERKURANG';
 
     public const KEPUTUSAN_BERLAKU = 'BERLAKU';
+
     public const KEPUTUSAN_MENUNGGU_PERENCANA = 'MENUNGGU_PERENCANA';
+
     public const KEPUTUSAN_PERLU_PERGESERAN = 'PERLU_PERGESERAN';
+
     public const KEPUTUSAN_DITOLAK = 'DITOLAK';
 
     /**
-     * @param list<RincianBerlaku> $rincian rincian aktif pada pagu jenis ini
-     * @param list<BarisRevisi> $draf perubahan dalam sesi edit
+     * @param  list<RincianBerlaku>  $rincian  rincian aktif pada pagu jenis ini
+     * @param  list<BarisRevisi>  $draf  perubahan dalam sesi edit
      */
     public function hitung(Uang $paguBerlaku, array $rincian, array $draf, bool $jenisBerlakuLangsung): HasilRevisi
     {

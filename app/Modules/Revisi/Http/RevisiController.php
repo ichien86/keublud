@@ -12,6 +12,7 @@ use App\Modules\Kodefikasi\Services\PemetaanService;
 use App\Modules\Revisi\Models\RevisiDetail;
 use App\Modules\Revisi\Models\RevisiPaket;
 use App\Modules\Revisi\Services\RevisiService;
+use App\Modules\Shared\Konfigurasi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ final class RevisiController extends Controller
                 'sumber_dana' => $pagu->sumberDana()->value('nama'),
                 'pagu_berlaku' => (string) $pagu->pagu_berlaku, 'sisa' => (string) $pagu->sisa,
                 'berlaku_langsung' => in_array($this->pemetaan->kodeJenis($pagu->jenis_id),
-                    (array) app(\App\Modules\Shared\Konfigurasi::class)->get('revisi.jenis_berlaku_langsung'), true),
+                    (array) app(Konfigurasi::class)->get('revisi.jenis_berlaku_langsung'), true),
             ],
             'paket' => ['uuid' => $paket->uuid, 'row_version' => $paket->row_version],
             'rincian' => RbaRincian::query()->where('rba_id', $rba?->id)->where('aktif', true)

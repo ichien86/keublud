@@ -2,7 +2,9 @@
 
 use App\Models\User;
 use App\Modules\ImporRba\Services\ImporRbaService;
+use App\Modules\Shared\Errors\KesalahanDomain;
 use App\Modules\StandarHarga\Models\UsulanStandarBatch;
+use App\Modules\StandarHarga\Models\UsulanStandarHarga;
 use App\Modules\StandarHarga\Services\UsulanStandarService;
 use Database\Seeders\DemoSeeder;
 use Illuminate\Http\UploadedFile;
@@ -44,7 +46,7 @@ test('alur lengkap: staging → kodefikasi → label unit → usulan item → di
     expect(DB::table('staging_rba')->where('impor_rba_id', $impor->id)->where('status', 'GAGAL')->count())->toBeGreaterThan(0);   // kodefikasi belum lengkap
 
     // Kodefikasi dari file (administrator)
-    expect(fn () => $this->svc->lengkapiKodefikasi($impor->id, ($this->user)('penyusun')))->toThrow(\App\Modules\Shared\Errors\KesalahanDomain::class);
+    expect(fn () => $this->svc->lengkapiKodefikasi($impor->id, ($this->user)('penyusun')))->toThrow(KesalahanDomain::class);
     $k = $this->svc->lengkapiKodefikasi($impor->id, ($this->user)('admin'));
     expect($k['pemetaan'])->toBeGreaterThan(10);
     expect(DB::table('staging_rba')->where('impor_rba_id', $impor->id)->where('status', 'GAGAL')->count())->toBe(0);
@@ -58,7 +60,7 @@ test('alur lengkap: staging → kodefikasi → label unit → usulan item → di
     $obat = DB::table('staging_rba')->where('impor_rba_id', $impor->id)->where('kode_blud', '5.1.02.01.01.0037')->first();
     $para = DB::table('standar_harga_item')->where('tahun', 2028)->where('kode_barang', '1.1.12.01.01')->first();
     expect(fn () => $this->svc->simpanItem($obat->id, [['item_id' => $para->id, 'volume' => '1', 'harga' => '999999']], null, ($this->user)('penyusun')))
-        ->toThrow(\App\Modules\Shared\Errors\KesalahanDomain::class, 'melebihi harga standar');
+        ->toThrow(KesalahanDomain::class, 'melebihi harga standar');
     $this->svc->simpanItem($obat->id, [['item_id' => $para->id, 'volume' => '104761.9047', 'harga' => $para->harga]], null, ($this->user)('penyusun'));
     expect(DB::table('staging_rba')->where('id', $obat->id)->value('status'))->toBe('PERLU_DIRINCI');   // belum tepat sama
     $this->svc->abaikan($obat->id, 'Obat dianggarkan ulang lewat e-katalog', ($this->user)('penyusun'));
@@ -70,7 +72,7 @@ test('alur lengkap: staging → kodefikasi → label unit → usulan item → di
     expect($sah['disahkan'] + $sah['dilewati'])->toBe(52);
     // usulan yang berkecocokan tinggi diputuskan satu per satu
     foreach (DB::table('usulan_standar_harga')->where('batch_id', $batch->id)->where('status', 'DIAJUKAN')->pluck('id') as $id) {
-        app(UsulanStandarService::class)->putuskan(\App\Modules\StandarHarga\Models\UsulanStandarHarga::query()->find($id), ($this->user)('perencana'),
+        app(UsulanStandarService::class)->putuskan(UsulanStandarHarga::query()->find($id), ($this->user)('perencana'),
             UsulanStandarService::SAHKAN, null, 'Paket tahunan hasil impor RBA, bukan item satuan');
     }
 
@@ -94,7 +96,7 @@ test('RBA tidak dibentuk bila masih ada baris belum siap', function () {
     $impor = stagingContoh($this);
 
     expect(fn () => $this->svc->bentukRba($impor->id, ($this->user)('penyusun')))
-        ->toThrow(\App\Modules\Shared\Errors\KesalahanDomain::class, 'belum siap');
+        ->toThrow(KesalahanDomain::class, 'belum siap');
 });
 
 test('halaman impor dapat dibuka dan pengguna tanpa kewenangan ditolak', function () {

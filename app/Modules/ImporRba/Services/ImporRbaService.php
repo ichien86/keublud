@@ -184,7 +184,7 @@ final class ImporRbaService
         $impor = $this->impor($imporId);
         $file = json_decode((string) $impor->kodefikasi, true) ?: ['PEMDA' => [], 'BLUD' => []];
 
-        return DB::transaction(function () use ($impor, $file, $user) {
+        return DB::transaction(function () use ($impor, $file) {
             $tambah = ['pemda' => 0, 'blud' => 0, 'pemetaan' => 0];
             $versi = ['PEMDA' => $this->versi('PEMDA', (int) $impor->tahun), 'BLUD' => $this->versi('BLUD', (int) $impor->tahun)];
 
@@ -224,8 +224,8 @@ final class ImporRbaService
                 $unitId = (int) DB::table('unit_kerja')->insertGetId(['kode' => $kode, 'nama' => $nama, 'jenis' => 'UNIT']);
             }
             DB::statement(
-                "INSERT INTO pemetaan_label_unit (label, unit_id) VALUES (?, ?)
-                 ON CONFLICT (label_norm) DO UPDATE SET unit_id = EXCLUDED.unit_id",
+                'INSERT INTO pemetaan_label_unit (label, unit_id) VALUES (?, ?)
+                 ON CONFLICT (label_norm) DO UPDATE SET unit_id = EXCLUDED.unit_id',
                 [$label, $unitId]
             );
             // Label baru berlaku untuk baris yang unitnya belum ditetapkan manual.
@@ -238,7 +238,7 @@ final class ImporRbaService
     /**
      * Mengganti pecahan item satu baris staging.
      *
-     * @param list<array{item_id:int, volume:string, harga?:string|null, unit_id?:int|null}> $item
+     * @param  list<array{item_id:int, volume:string, harga?:string|null, unit_id?:int|null}>  $item
      */
     public function simpanItem(int $stagingId, array $item, ?int $unitId, User $user): void
     {
@@ -472,7 +472,7 @@ final class ImporRbaService
     /**
      * Membuat rekening beserta induknya bila belum ada. Uraian induk yang tidak tertulis di file diberi tanda.
      *
-     * @param array<string, array{uraian: string}> $kamus
+     * @param  array<string, array{uraian: string}>  $kamus
      */
     private function pastikanRekening(int $versiId, string $bagan, string $kode, string $uraian, array $kamus): int
     {

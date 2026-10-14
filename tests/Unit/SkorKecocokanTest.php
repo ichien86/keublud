@@ -16,20 +16,20 @@ test('normalisasi uraian menyatukan angka dan satuan serta membuang kata umum', 
 });
 
 test('UAT-03 usulan mirip dengan item yang ada berkategori tinggi', function () {
-    $s = new SkorKecocokan();
+    $s = new SkorKecocokan;
     $h = $s->hitung(0.80, null, '1.1.7.01', 'rim', 'Rim', Uang::dari('52000'), Uang::dari('50000'));
     expect($h['kategori'])->toBe(SkorKecocokan::TINGGI);
     expect($h['skor'])->toBeGreaterThan(0.69);
 });
 
 test('tanpa kode barang, kemiripan uraian 0.72 masih berkategori sedang', function () {
-    $s = new SkorKecocokan();
+    $s = new SkorKecocokan;
     $h = $s->hitung(0.72, null, '1.1.7.01', 'rim', 'Rim', Uang::dari('52000'), Uang::dari('50000'));
     expect($h['kategori'])->toBe(SkorKecocokan::SEDANG);
 });
 
 test('item berbeda jauh berkategori tanpa', function () {
-    $s = new SkorKecocokan();
+    $s = new SkorKecocokan;
     $h = $s->hitung(0.10, null, null, 'unit', 'rim', Uang::dari('31850000'), Uang::dari('50000'));
     expect($h['kategori'])->toBe(SkorKecocokan::TANPA);
 });

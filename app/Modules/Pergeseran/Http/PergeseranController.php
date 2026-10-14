@@ -55,7 +55,7 @@ final class PergeseranController extends Controller
             ->when($request->integer('sumber_dana_id'), fn ($q, $v) => $q->where('g.sumber_dana_id', $v))
             ->orderBy('j.kode')->orderBy('s.kode')->orderBy('m.batas_pasangan')
             ->get(['m.id', 'm.uuid', 'm.nomor', 'm.arah', 'm.nilai', 'm.batas_pasangan', 'm.memuat_di_atas_standar',
-                   'u.nama as unit', 'j.kode as kode_jenis', 'j.uraian as jenis', 's.nama as sumber_dana', 'g.jenis_id', 'g.sumber_dana_id']);
+                'u.nama as unit', 'j.kode as kode_jenis', 'j.uraian as jenis', 's.nama as sumber_dana', 'g.jenis_id', 'g.sumber_dana_id']);
 
         return response()->json(['data' => $baris]);
     }

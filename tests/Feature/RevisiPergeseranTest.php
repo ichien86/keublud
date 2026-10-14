@@ -6,9 +6,11 @@ use App\Modules\Pergeseran\Jobs\ProsesBatasPengesahan;
 use App\Modules\Pergeseran\Models\PasanganPergeseran;
 use App\Modules\Pergeseran\Models\PermintaanPergeseran;
 use App\Modules\Pergeseran\Services\PasanganService;
+use App\Modules\Pergeseran\Services\PermintaanService;
 use App\Modules\Revisi\Models\RevisiPaket;
 use App\Modules\Revisi\Services\RevisiService;
 use App\Modules\Shared\Errors\KesalahanDomain;
+use App\Modules\Shared\Notifikasi\Penerima;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -90,7 +92,7 @@ test('UAT-40/41 permintaan tanpa pasangan ditolak otomatis setelah 5 hari kerja 
     $paket = $this->revisi->kirimPergeseran($paket->refresh(), $this->u['lab']);
 
     Carbon::setTestNow('2026-10-20 00:01:00');   // lewat akhir hari kerja ke-5 (Senin 19 Okt 23:59:59)
-    (new ProsesBatasPasangan)->handle(app(\App\Modules\Pergeseran\Services\PermintaanService::class), $this->pasangan);
+    (new ProsesBatasPasangan)->handle(app(PermintaanService::class), $this->pasangan);
 
     expect(PermintaanPergeseran::query()->findOrFail($paket->permintaan_id)->status)->toBe('DITOLAK_OTOMATIS');
     expect(RevisiPaket::query()->findOrFail($paket->id)->status)->toBe('GUGUR');
@@ -112,7 +114,7 @@ test('UAT-43 pasangan disetujui otomatis setelah 5 hari kerja tanpa respons pere
     expect($p->status)->toBe('MENUNGGU_PERENCANA');
 
     Carbon::setTestNow('2026-10-20 00:05:00');
-    (new ProsesBatasPengesahan)->handle($this->pasangan, app(\App\Modules\Shared\Notifikasi\Penerima::class));
+    (new ProsesBatasPengesahan)->handle($this->pasangan, app(Penerima::class));
 
     $p = PasanganPergeseran::query()->findOrFail($p->id);
     expect($p->status)->toBe('DISETUJUI_OTOMATIS');
